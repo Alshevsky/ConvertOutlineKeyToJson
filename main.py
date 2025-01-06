@@ -7,7 +7,7 @@ import sys
 def convert_to_dict(key: str) -> dict:
     base64code, server_info = key.split("@")
     base64code = base64code.replace("ss://", "")
-    server_info = server_info.replace("/?outline=1", "")
+    server_info = re.search(r"((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}:\d{4,5}", server_info).group()
     decoded = base64.b64decode(base64code).decode("utf-8")
     method, password = decoded.split(":")
     server_ip, server_port = server_info.split(":")
@@ -32,7 +32,9 @@ def main():
     try:
         assert sys.version_info >= (3, 10), "Need install Python 3 version 10 or more"
         outline_key = input("Enter you key here: ")
-        matched = re.match(r"ss:\/\/\w+@((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}:\d{4,5}\/\?outline=1", outline_key)
+        matched = re.match(
+            r"ss:\/\/[\w=]+@((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}:\d{4,5}[\w\/#\?=%.]+", outline_key
+        )
         assert matched, "Invalid Outline key"
         converted = convert_to_dict(outline_key)
         write_to_file(converted)
