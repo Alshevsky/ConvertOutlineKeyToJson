@@ -7,7 +7,7 @@ This simple script is designed to convert your outline key to a json file that w
    ```
    git clone https://github.com/Alshevsky/ConvertOutlineKeyToJson.git
    ```
-2. Navigate to the project directory in terminal:
+2. Navigate to the project directory in the terminal:
    ```
    cd ConvertOutlineKeyToJson
    ```
